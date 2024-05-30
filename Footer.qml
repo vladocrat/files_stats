@@ -94,6 +94,10 @@ Item {
 
                 onClicked: {
                     FileStatsController.stop();
+
+                    if (!pauseBtn.visible) {
+                        pauseBtn.visible = true;
+                    }
                 }
             }
         }

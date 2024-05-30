@@ -89,12 +89,12 @@ void Worker::run(const QString& fileName, uint32_t lineCount)
             }
 
             if (!impl().isRunning) {
+                impl().parser.clear();
                 break;
             }
 
             const auto chunk = impl().parser.getChunk(bytesRead);
             emit chunkProccessed(bytesRead, chunk);
-
         } while (bytesRead != fileSize() && impl().isRunning);
 
         impl().isRunning = false;
@@ -105,10 +105,8 @@ void Worker::run(const QString& fileName, uint32_t lineCount)
 void Worker::stop()
 {
     impl().isRunning = false;
-    impl().parser.clear();
 
     if (impl().paused) {
-        impl().locker.unlock();
         impl().paused = false;
         impl().pauseCond.wakeAll();
     }
