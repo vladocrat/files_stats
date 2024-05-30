@@ -21,4 +21,9 @@ The architecture consists of:
   5. User can pause file processing at any time, by pressing "pause" button, and later resume it by pressing "resume" button.
   6. User can stop file processing by pressing "stop" button.
 
-![изображение](https://github.com/vladocrat/files_stats/assets/47445848/dd233d2a-34a3-4eb3-bbe5-6849089f33b9)
+test data set is located in `/res` folder
+
+<p align="center">
+  <img src="https://github.com/vladocrat/files_stats/assets/47445848/dd233d2a-34a3-4eb3-bbe5-6849089f33b9" />
+</p>
+
