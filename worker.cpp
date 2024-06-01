@@ -55,8 +55,10 @@ void Worker::resume()
         return;
     }
 
+    impl().locker.lock();
     impl().paused = false;
     impl().pauseCond.wakeAll();
+    impl().locker.unlock();
 }
 
 void Worker::run(const QString& fileName, uint32_t lineCount)
@@ -82,11 +84,13 @@ void Worker::run(const QString& fileName, uint32_t lineCount)
         uint32_t bytesRead { 0 };
 
         do {
+            impl().locker.lock();
+
             if (impl().paused) {
-                impl().locker.lock();
                 impl().pauseCond.wait(&impl().locker);
-                impl().locker.unlock();
             }
+
+            impl().locker.unlock();
 
             if (!impl().isRunning) {
                 impl().parser.clear();
@@ -106,10 +110,14 @@ void Worker::stop()
 {
     impl().isRunning = false;
 
+    impl().locker.lock();
+
     if (impl().paused) {
         impl().paused = false;
         impl().pauseCond.wakeAll();
     }
+
+    impl().locker.unlock();
 }
 
 int Worker::fileSize() const
